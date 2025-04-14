@@ -29,8 +29,26 @@ jobs:
     
         - name: Install Dependencies
           run: npm install
+        
+        - name: Check code coverage
+          continue-on-error: true
+          run: npm run coverage
     
         - name: Unit Testing
           run: npm test
+
+    docker-containerization:
+      needs: [unit-testing]
+      name: Containerization with Docker
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+
+        - name: Dockerhub login
+          uses: docker/login-action@v2.2.0
+          with: 
+            username: ${{vars.DOCKERHUB_USERNAME}} 
+            password: ${{vars. DOCKERHUB_PASSWORD}}
           
         
