@@ -18,14 +18,16 @@ jobs:
               - nodejs_version: 18
                 operating_system: macos-latest
         runs-on: ${{ matrix.operating_system}}
+        container:      
+          image: 'node:20'
         steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
 
-        - name: Setup NodeJS Version
-          uses: actions/setup-node@v3
-          with:
-            node-version: ${{ matrix.nodejs_version }}
+        #- name: Setup NodeJS Version
+         # uses: actions/setup-node@v3
+          #with:
+           # node-version: ${{ matrix.nodejs_version }}
         - name: Caching NPM dependencies
           uses: actions/cache@v3
 
