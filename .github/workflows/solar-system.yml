@@ -93,12 +93,32 @@ jobs:
           uses: azure/setup-kubectl@v4
           with:
             version: 'v1.26.0' # default is latest stable
-        
+
+        - name: Set kubeconfig file
+          uses: azure/k8s-set-context@v4
+          with:
+            method: kubeconfig
+            #kubeconfig: <your kubeconfig>
+            #context: <context name> # current-context from kubeconfig is used as default this value is stored in the repo secrets
+          
         - name: Fetch Kubernetes Cluster Details
           run: |
             kubectl version --short
             echo ---------------------------------------------
             kubectl get nodes
+
+        - name: Replace Token in Manifest Files
+          uses: cschleiden/replace-tokens@v1
+          with:
+            tokenPrefix: '_{_'
+            tokenSuffix: '_}_'
+            files: '["kubernetes/development/*.yaml"]'
+          env:
+            NAMESPACE: ${{ vars.NAMESPACE}}
+            REPLICAS: ${{ vars.REPLICAS}}
+            
+            
+        
 
         
 
