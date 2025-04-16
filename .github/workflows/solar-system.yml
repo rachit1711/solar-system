@@ -116,6 +116,14 @@ jobs:
           env:
             NAMESPACE: ${{ vars.NAMESPACE}}
             REPLICAS: ${{ vars.REPLICAS}}
+
+        - name: Check files
+          run: |
+            cat kubernetes/deployment/*.yaml
+
+        - name: Deploy 
+          run: |
+            kubectl apply -f kubernetes/development
             
             
         
