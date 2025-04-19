@@ -1,3 +1,4 @@
+#caller workflow
 name: Solar System Workflow
 
 on: 
@@ -40,6 +41,9 @@ jobs:
     docker:
       needs: [unit-testing]
       uses: ./.github/workflows/reuse-deployment.yml
+      secrets:
+        k8s-kubeconfig: ${{ secrets.KUBECONFIG }}
+        mongodb-password: ${{ secrets.MONGO_PASSWORD }}
       
 
 
