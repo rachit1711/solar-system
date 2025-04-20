@@ -1,0 +1,19 @@
+name: 'NPM custom action'
+description: 'Installing and Caching NPM packages'
+inputs:
+  path-of-folder:  # path to folder
+  description: 'the path to cache'
+  required: true
+  
+runs:
+  using: "composite"
+  steps:
+  - name: Setup NodeJS Version
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.nodejs_version }}
+    
+  - name: Install Dependencies
+      run: npm install
+      shell: bash #each composite action run command is followed by a shell command as well. As composite actions can be run over any OS, we need to specify the shell based on the type of OS being used
+      
